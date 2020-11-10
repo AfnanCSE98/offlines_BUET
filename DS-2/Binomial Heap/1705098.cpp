@@ -105,6 +105,10 @@ public:
 	    cout<<"Printing Binomial Heap..."<<endl;
 	    Node_Pointer currPtr = new Node;
 		currPtr = head;
+		if(currPtr == nullptr){
+            cout<<"The heap is empty!"<<endl;
+            return;
+		}
 		while (currPtr != nullptr) {
 
 			cout<<"Binomial Tree, "<<"B"<<currPtr->degree<<endl;
@@ -165,16 +169,6 @@ public:
 		Union(h);
 	}
 
-	Node_Pointer copy_ptr(Node_Pointer y)
-	{
-	    Node_Pointer x = new Node;
-	    x->val = y->val;
-	    x->parent = y->parent;
-	    x->child = y->child;
-	    x->degree = y->degree;
-	    x->sibling = y->sibling;
-	    return x;
-	}
 	void Union(BinomialHeap h1) {
         Node_Pointer tmp1 = get_HeadPointer();
 		Node_Pointer tmp2 = h1.get_HeadPointer();
@@ -234,7 +228,7 @@ public:
 				///Else union
 				if (tmp3->val <= next->val) {
 					tmp3->sibling = next->sibling;
-					BinomialHeap::link_Two_BinomialTrees(tmp3, next);
+					link_Two_BinomialTrees(tmp3, next);
 				} else {
 					if (prev == nullptr) {
 						temp = next;
@@ -287,8 +281,11 @@ public:
             head = nullptr;
 		}
 
-		Node_Pointer childPtr = minPtr->child;///removing parent reference from all its child
-		while (childPtr != nullptr) {
+		Node_Pointer childPtr = minPtr->child;
+		if(childPtr == nullptr){
+            return minPtr;
+		}
+		while (childPtr != nullptr) {  ///removing parent reference from all its child
 			childPtr->parent = nullptr;
 			childPtr = childPtr->sibling;
 		}
@@ -300,7 +297,7 @@ public:
 			childPtr = childPtr->sibling;
 		}
 
-		Node_Pointer temp = nullptr;
+		Node_Pointer temp = new Node;
 		if(!s.empty()){
             curr = s.top();
             temp = curr;
@@ -313,7 +310,7 @@ public:
 			curr = curr->sibling;
 		}
 
-		curr->sibling = nullptr;
+		if(curr != nullptr)curr->sibling = nullptr;
 		BinomialHeap h;
 		h.set_HeadPointer(temp);
 
@@ -333,7 +330,7 @@ int main() {
 
     FILE *fp;
     ///uncomment to output in a file
-    //fp = freopen("output.txt", "w+", stdout);
+    fp = freopen("output.txt", "w+", stdout);
 
     char op;int key;
     BinomialHeap h;
