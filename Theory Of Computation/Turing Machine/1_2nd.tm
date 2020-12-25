@@ -1,4 +1,5 @@
 # St Id:1705098 , so problem 1-2
+# the tm writes X at the position (n+2) if ww^r string of length 2n is found.If w is an empty string ,it writes X and goes to qf
 
 # the following 3 lines are commands
 #! start q0
@@ -6,39 +7,33 @@
 #! fill B
 
 # Now we specify some rules
-q0 1 X R q1
-q0 0 Y R q2
-q1 0 0 R q1
-q1 1 1 R q1
-q2 0 0 R q2
-q2 1 1 R q2
-q1 Y Y L q3
-q1 X X L q3
-q1 B B L q3
-q2 Y Y L q3
-q2 X X L q3
-q2 B B L q3
+q0 1 B R [q1,1]
+q0 0 B R [q1,0]
 
-q3 1 X L q4
-q3 0 Y L q5
+[q1,1] 1 1 R [q1,1]
+[q1,1] 0 0 R [q1,1]
+[q1,0] 1 1 R [q1,0]
+[q1,0] 0 0 R [q1,0]
 
-q4 0 0 L q4
+[q1,1] B B L [q3,1]
+[q1,0] B B L [q3,0]
+
+[q3,1] 1 B L q4
+[q3,1] 0 0 L q5
+[q3,0] 0 B L q4
+[q3,0] 1 1 L q5
+
 q4 1 1 L q4
-q5 0 0 L q5
-q5 1 1 L q5
+q4 0 0 L q4
+q4 B B R q0
 
-q4 X X R q0
-q4 Y Y R q0
-q5 X X R q0
-q5 Y Y R q0
+q0 B B R q5
 
-q0 X X R q6
-q0 Y Y R q6
+q5 B X R qf
+q5 0 0 L qf
+q5 1 1 L qf
 
-q6 X X R q6
-q6 Y Y R q6
 
-q6 B B L qf
 
 
  
